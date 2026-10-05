@@ -31,17 +31,45 @@ Los servicios a desplegar son los siguientes:
 ## 3. Arquitectura de red y datos
 
 ### 3.1. Redes Docker
-
-Red principal que se va a llamar ""red-ia" a la que van a pertenecer todos los contenedores para poder comunicarse entre si. Red en modo "brige" y crear un sistema de naming (DNS) local del modo siguiente: 
+Red principal que se va a llamar "red-ia" a la que van a pertenecer todos los contenedores para poder comunicarse entre sí. Red en modo "bridge" y crear un sistema de naming (DNS) local del modo siguiente:
 | Servicio | Nombre de contenedor | URL |
 | :--- | :--- | :--- |
-| **Ollama** | ollama | https://ollama:11434 |
+| **Ollama** | ollama | http://ollama:11434 |
+| **Open WebUI** | openwebui | http://openwebui:8080 |
+| **Hermes Agent** | hermes-agent | http://hermesagent:8000 |
+| **OpenCode** | opencode | http://opencode:8443 |
+| **ComfyUI** | comfyui | http://comfyui:8188 | 
+| **YOLO** | yolo | http://yolo:5000 |
+| **SearXNG** | searxng | http://searxng:8080 | 
+| **RAG** | rag | ***Integrado con otros servicios*** | 
 
 ### 3.2. Volúmenes de datos
+Consiste en "mapear" un sistema de ficheros dentro de cada contenedor a la máquina física que los contiene.
+| Nombre volumen | Direccionamiento | Descripción |
+| :--- | :--- | :--- |
+| ollama_data | `$HOME/ollama` | almacenamiento modelos LLM |
+| openwebui_data | `$HOME/openwebui` | usuarios, chats, prompts, configuraciones |
+| **Hermes Agent** | `$HOME/hermes` | Configuración de los agentes |
+| **OpenCode** | `$HOME/opencode` | Código de los proyectos y las configuraciones |
+| **ComfyUI** | `$HOME/comfyui` | Imágesn y vídeos generados, prompts y modelos generativos | 
+| **YOLO** | `$HOME/yolo` | Dataset de los vídeos o imágenes analizadas |
+| **SearXNG** | `$HOME/searxng` | Resultados de las búsquedas realizadas | 
+| **RAG** | `$HOME/rag` | Ficheros que se le dotan para aumentar el conocimiento a la IA |
 
 ## 4. Requisitos de sistema y hardware
+1. **SO:** Ubuntu Server 24.04 o 26.04.
+2. **GPU:** Tarjeta gráfica NVIDIA, algunos ordenadores con el modelo 3060 de 12Gb.
+3. **Drivers:** Driver NVIDIA CUDA o nvidia-drivers oficiales.
+4. **Docker:** Sistema de contenedores para cada servicio, docker compose, y docker.
 
 ## 5. Instrucciones para generar el manual técnico
+> **Instrucciones para la generación del documento de salida:**
+> Actúa como un experto en administración de sistemas GNU/Linux y Devops, genera un **Manual de instalación, configuración y operación** exhaustivo y detallado en formato Markdown basado esta especificación.
+> El manual generado debe incluir obligatoriamente las siguientes secciones:
+> 1. **Prerrequisitos e instalación base:** Comandos básicos en Linux para instalar Docker, Docker compose, drivers de NVIDIA CUDA, utilizando repositorios apt.
+> 2. **Estructura del proyecto:** Árbol detallado de directorios para el stack que vamos a montar `$HOME/proyecto`
+> 3. **Ficheros de configuración:** Un `docker-<servicio>.yml` por cada uno de los servicios que vamos a montar donde <servicio> se sustituye por el nombre del contenedor.
+> 4. **Fichero de entorno:** Fichero `.env` con todas las variables del entorno de todos los servicios.
 
 ## 6. Criterios de aceptación
 
